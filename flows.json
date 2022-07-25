@@ -1,0 +1,131 @@
+[
+    {
+        "id": "9f246d4eb7424207",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "0683dbed6bdcdd98"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 660,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "6e76aee4c52ec648",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {
+            "module": "node-red-contrib-vgbacnet1",
+            "type": "valgenesis",
+            "version": "0.0.1",
+            "author": "sudarsan.damodaran@valgenesis.com",
+            "desc": "BACnet Test Module",
+            "license": "Apache-2.0"
+        },
+        "color": "#DDAA99"
+    },
+    {
+        "id": "0683dbed6bdcdd98",
+        "type": "BACnet-Read",
+        "z": "9f246d4eb7424207",
+        "name": "Weight",
+        "objectType": "ANALOG_INPUT",
+        "instance": "dcb65f1e776127df",
+        "propertyId": "85",
+        "device": "41167a7643735ba4",
+        "server": "974939f7e07b46bb",
+        "multipleRead": true,
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "6a4228ddfc87085d"
+            ]
+        ]
+    },
+    {
+        "id": "6a4228ddfc87085d",
+        "type": "json",
+        "z": "9f246d4eb7424207",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 350,
+        "y": 80,
+        "wires": [
+            [
+                "6e76aee4c52ec648"
+            ]
+        ]
+    },
+    {
+        "id": "6e76aee4c52ec648",
+        "type": "function",
+        "z": "9f246d4eb7424207",
+        "name": "function 1",
+        "func": "var data =  msg.payload;\nvar dataobj = JSON.parse(data);\nmsg.payload = dataobj.values[0].values[0].value[0].value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dcb65f1e776127df",
+        "type": "BACnet-Instance",
+        "name": "Humditity",
+        "instanceAddress": "3"
+    },
+    {
+        "id": "41167a7643735ba4",
+        "type": "BACnet-Device",
+        "z": "0d39df0beb334ba1",
+        "name": "BACnet",
+        "deviceAddress": "192.168.9.137:47809"
+    },
+    {
+        "id": "974939f7e07b46bb",
+        "type": "BACnet-Client",
+        "z": "0d39df0beb334ba1",
+        "name": "Test Client",
+        "adpuTimeout": "6000",
+        "port": "47808",
+        "interface": "192.168.9.137",
+        "broadcastAddress": "192.168.9.255"
+    },
+    {
+        "id": "e7de3c7da9a121c3",
+        "type": "subflow:9f246d4eb7424207",
+        "z": "0d39df0beb334ba1",
+        "name": "BACnet_1",
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "4dd44cd18f702601",
+                "f37f37928f16877f"
+            ]
+        ]
+    }
+]
